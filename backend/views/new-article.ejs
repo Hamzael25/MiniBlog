@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>Créer un article</title>
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="new-article-body">
+	<div class="container new-article">
+		
+		<h1>Créer un nouvel article</h1>
+		<form method="POST" action="/articles">
+			<label for="title">Titre :</label><br>
+			<input type="text" id="title" name="title" required><br><br>
+			<label for="content">Contenu :</label><br>
+			<textarea id="content" name="content" rows="5" cols="40" required></textarea><br><br>
+			<button type="submit">Envoyer</button>
+		</form>
+		<button class="btn" onclick="window.location.href='/list-articles'">Voir la liste des articles</button>
+
+	</div>
+</body>
+</html>

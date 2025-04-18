@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>Liste des articles</title>
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="list-body">
+	<div class="container list-articles">
+		<h1>Liste des articles</h1>
+		<div class="card list">
+			<ul id="articles-list" style="list-style: none; padding-left: 0;"></ul>
+			<button class="btn" onclick="window.location.href='/new-article'">Créer un nouvel article</button>
+		</div>
+		<script>
+			fetch('/articles')
+			.then(response => response.json())
+			.then(articles => {
+				const list = document.getElementById('articles-list');
+				articles.forEach(article => {
+					const li = document.createElement('li');
+					li.innerHTML = '<h2>' + article.title + '</h2><p>' + article.content + '</p>';
+					list.appendChild(li);
+				});
+			})
+			.catch(error => {
+				console.error('Erreur lors de la récupération des articles:', error);
+			});
+		</script>
+	</div>
+</body>
+</html>

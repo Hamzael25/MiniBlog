@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: blog-db
+    environment:
+      - POSTGRES_DB=blogdb
+      - POSTGRES_USER=bloguser
+      - POSTGRES_PASSWORD=blogpass
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432" 
+
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: blog-app
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=blogdb
+      - DB_USER=bloguser
+      - DB_PASSWORD=blogpass
+    ports:
+      - "3000:3000"
+    # montage des volumes pour le dev "live reload", a retirer en prod
+    volumes:
+      - ./backend/public:/usr/src/app/public
+      - ./backend/views:/usr/src/app/views
+
+volumes:
+  db_data:
